@@ -7,20 +7,17 @@ Repo for Conjur's ChefConf15 workshop
 The deploy container is responsible for uploading new cookbooks to the Chef server.
 
 Build the deploy image
-
 ```
 cd deploy
 docker build -t deploy .
 ```
 
 Create a Conjur identity
-
 ```
 conjur host create deploy | tee deploy.json
 ```
 
 Create the secret. We'll give you the content in the workshop.
-
 ```
 conjur variable create hostedchef/conjurbot/private_key
 cat conjurbot.pem | conjur variable values add hostedchef/conjurbot/private_key
@@ -63,5 +60,13 @@ Verify we now have access
 $ conjur env check
 CLIENT_PEM: available
 
-conjur env run -- knife cookbook list
+$ conjur env run -- knife cookbook list
+apt               2.7.0
+build-essential   2.2.1
+conjur-client     0.3.1
+conjur_base       0.1.0
+foundation        0.1.1
+sshd-service      1.1.0
+terminal-login    0.2.3
+yum               3.5.3
 ```
