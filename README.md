@@ -6,26 +6,29 @@ Repo for Conjur's ChefConf15 workshop
 
 The deploy container is responsible for uploading new cookbooks to the Chef server.
 
-Create a Conjur identity
+Build the deploy image
 
 ```
 cd deploy
-conjur host create deploy | conjurize > conjurize.sh
-```
-
-Build the image
-
-```
 docker build -t deploy .
 ```
 
-Run it in the background
+Create a Conjur identity
+
 ```
-docker run --name=deploy -d deploy
+conjur host create deploy | tee deploy.json
 ```
 
-Conjurize it
-TODO - how do we want to do this?
+Grant execute privileges on the conjurbot Chef private key
 
-Mount cookbooks and run a deploy
-TODO
+```
+conjur resource permit host:deploy variable:hostedchef/conjurbot/private_key execute
+```
+
+Run the deploy container as a one-off deployer
+```
+docker run \
+-e CONJUR_AUTHN_LOGIN=host/$(cat deploy.json | jsonfield id) \
+-e CONJUR_AUTHN_API_KEY=$(cat deploy.json | jsonfield api_key) \
+-t deploy knife cookbook list
+```
