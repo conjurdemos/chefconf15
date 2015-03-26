@@ -25,10 +25,10 @@ Grant execute privileges on the conjurbot Chef private key
 conjur resource permit host:deploy variable:hostedchef/conjurbot/private_key execute
 ```
 
-Run the deploy container as a one-off deployer
+Run the deploy container interactively
 ```
 docker run \
 -e CONJUR_AUTHN_LOGIN=host/$(cat deploy.json | jsonfield id) \
 -e CONJUR_AUTHN_API_KEY=$(cat deploy.json | jsonfield api_key) \
--t deploy knife cookbook list
+-it deploy bash
 ```
