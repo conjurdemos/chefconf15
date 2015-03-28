@@ -70,3 +70,16 @@ sshd-service      1.1.0
 terminal-login    0.2.3
 yum               3.5.3
 ```
+
+## Database
+
+Now we want to launch a MySQL instance for Sentry to connect to.
+We already have an image available. Start it in the background.
+
+```
+cd database
+source start.sh
+```
+
+The database host and sentry password are now available as $DB_HOST and $DB_PASSWORD, respectively.
+
