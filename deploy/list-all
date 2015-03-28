@@ -1,0 +1,3 @@
+#!/bin/bash -e
+
+conjur env run -- knife cookbook list

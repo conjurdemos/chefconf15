@@ -1,1 +1,1 @@
-CLIENT_PEM: !tmp hostedchef/conjurbot/private_key
+CLIENT_PEM: !tmp chef-server/deploy/private_key

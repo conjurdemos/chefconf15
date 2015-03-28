@@ -1,0 +1,2 @@
+%conjurers ALL = (ALL) NOPASSWD: /usr/local/bin/upload-all
+%conjurers ALL = (ALL) NOPASSWD: /usr/local/bin/list-all

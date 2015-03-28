@@ -1,10 +1,7 @@
-#!/bin/bash
-set -e
+#!/bin/bash -e
 
-conjur env check
+folder=$1
 
-berks vendor .vendor
+berks vendor -b $folder/Berksfile .vendor
 
 conjur env run -- knife cookbook upload --all -o .vendor
-
-rm -rf .vendor
