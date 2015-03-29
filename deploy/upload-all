@@ -2,6 +2,6 @@
 
 folder=$1
 
-berks vendor -b $folder/Berksfile $folder/.vendor
+berks vendor -e integration -b $folder/Berksfile $folder/.vendor
 
-conjur env run /.conjurenv -- knife cookbook upload -c /etc/chef/knife.rb --all -o $folder/.vendor
+conjur env run -c /.conjurenv -- knife cookbook upload -c /etc/chef/knife.rb --all -o $folder/.vendor
