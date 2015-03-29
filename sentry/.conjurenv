@@ -1,0 +1,4 @@
+CLIENT_PEM: !tmp chef-server/validation/private_key
+CLIENT_NAME: chefconf15-conjur-validator
+DB_PASSWORD_DEFAULT: !var sentry/mysql/default/password
+
