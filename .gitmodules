@@ -1,3 +1,6 @@
-[submodule "foundation"]
-	path = foundation
+[submodule "cookbooks/foundation"]
+	path = cookbooks/foundation
 	url = https://github.com/conjurdemos/chefconf15-base.git
+[submodule "cookbooks/sentry"]
+	path = cookbooks/sentry
+	url = https://github.com/conjurdemos/sentry-cookbook.git
