@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+export LC_CTYPE=en_US.UTF-8
+
 folder=$1
 
 berks vendor -e integration -b $folder/Berksfile $folder/.vendor
