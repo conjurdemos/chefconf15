@@ -1,3 +1,3 @@
 #!/bin/bash -e
-
-chef-client -c /etc/chef/client.rb -r sentry-$USERNAME
+export HOME=/root
+conjur env run -- chef-client -c /etc/chef/client.rb -o $COOKBOOK_NAME
