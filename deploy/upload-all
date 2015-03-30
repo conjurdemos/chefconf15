@@ -1,9 +1,0 @@
-#!/bin/bash -e
-
-export LC_CTYPE=en_US.UTF-8
-
-folder=$1
-
-berks vendor -e integration -b $folder/Berksfile $folder/.vendor
-
-conjur env run -c /.conjurenv -- knife cookbook upload -c /etc/chef/knife.rb --all -o $folder/.vendor
