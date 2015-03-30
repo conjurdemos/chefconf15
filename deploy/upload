@@ -2,9 +2,11 @@
 
 export LC_CTYPE=en_US.UTF-8
 
-cookbook=$1
+cookbook_base=$1
 shift
-folder=/cookbooks/$cookbook
+folder=/cookbooks/$cookbook_base
+
+cookbook=$( grep -r "^name" $folder/metadata.rb | cut -f2 -d '"' )
 
 berks vendor -e integration -b $folder/Berksfile $folder/.vendor
 
