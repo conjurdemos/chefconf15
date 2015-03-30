@@ -1,0 +1,38 @@
+#!/bin/bash -e
+
+export LC_CTYPE=en_US.UTF-8
+
+cookbook=$1
+shift
+folder=/cookbooks/$cookbook
+
+berks vendor -e integration -b $folder/Berksfile $folder/.vendor
+
+cd $folder/.vendor
+
+message=$(conjur env run -c /.conjurenv -- knife cookbook upload -c /etc/chef/knife.rb \
+  --cookbook-path $PWD \
+  $@ \
+  $cookbook)
+
+echo $message
+
+result=$?
+if [ $result -eq 0 ]; then
+  if [ $(conjur resource exists chef-cookbook:$cookbook) == false ]; then
+    conjur resource create chef-cookbook:$cookbook
+  fi
+
+  cat << AUDIT | conjur audit send > /dev/null
+{
+  "resource": "chef-cookbook:$cookbook",
+  "facility": "cookbook-deploy",
+  "action": "upload",
+  "status_code": 0,
+  "audit_message": "Uploaded cookbook '$cookbook' with command options: $@"
+}
+AUDIT
+else
+  echo Upload failed with exit code $result:
+fi
+
