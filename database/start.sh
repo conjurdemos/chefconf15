@@ -9,7 +9,10 @@ fi
 docker build -t conjurdemos/sentry-db . 2>&1 >> db.log
 docker run -d --cidfile=db.cid --name=sentry-db conjurdemos/sentry-db 2>&1 >> db.log
 
-sleep 10
+until docker exec sentry-db bash -c 'mysqladmin ping 2>&1 >/dev/null' 2>&1 >/dev/null ; do
+  sleep 2
+done
+
 
 docker logs sentry-db >> db.log
 
